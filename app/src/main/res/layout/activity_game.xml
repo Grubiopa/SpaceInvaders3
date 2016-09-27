@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_game"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/estrella"
+    tools:context="com.example.grupo8.spaceinvaders.GameActivity">
+
+    <ImageButton
+        android:layout_width="111dp"
+        android:layout_height="91dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/falcon"
+        android:id="@+id/imageButton"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:contentDescription=""
+        android:onClick="disparo"/>
+
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="60dp"
+        android:background="@drawable/verdelaser"
+        android:layout_marginBottom="26dp"
+        android:id="@+id/Misil"
+        android:layout_above="@+id/imageButton"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible" />
+
+    <ImageView
+        android:layout_width="111dp"
+        android:layout_height="91dp"
+        android:background="@drawable/caza"
+        android:id="@+id/caza1"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/imageButton"
+        android:layout_alignStart="@+id/imageButton" />
+
+</RelativeLayout>
