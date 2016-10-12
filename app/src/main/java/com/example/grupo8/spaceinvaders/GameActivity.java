@@ -44,6 +44,7 @@ public class GameActivity extends AppCompatActivity {
                 sentido=!sentido;
 
             h2.postDelayed(this, 50);
+
         }
     };
     Runnable run2 = new Runnable() {
@@ -51,6 +52,7 @@ public class GameActivity extends AppCompatActivity {
         @Override
         public void run() {
             ImageView misil = (ImageView) findViewById(R.id.Misil);
+            ImageView caza = (ImageView) findViewById(R.id.caza1);
             ImageButton nave = (ImageButton) findViewById(R.id.imageButton);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
@@ -66,8 +68,11 @@ public class GameActivity extends AppCompatActivity {
                 h3.removeCallbacks(run2);
                 nave.setEnabled(true);
             }
-
             h3.postDelayed(this, 50);
+            if ((Math.abs(caza.getX() - misil.getX()) < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
+                    caza.setVisibility(View.INVISIBLE);
+                }
+
         }
     };
     public void disparo(View v){
