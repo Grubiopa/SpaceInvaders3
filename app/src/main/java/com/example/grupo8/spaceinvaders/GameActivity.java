@@ -1,5 +1,6 @@
 package com.example.grupo8.spaceinvaders;
 
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -7,17 +8,27 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
+    private TextView tx;
+    private String scored;
+    private int score;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         h2.postDelayed(run, 0);
+        /*Typeface font = Typeface.createFromAsset(getAssets(), "fonts/munro_narrow.ttf");
+        tx.setTypeface(font);*/
+        tx=(TextView) findViewById(R.id.score);
+        scored=Integer.toString(score);
+        tx.setText(scored);
+
 
     }
 
@@ -67,11 +78,21 @@ public class GameActivity extends AppCompatActivity {
                 misil.setVisibility(View.INVISIBLE);
                 h3.removeCallbacks(run2);
                 nave.setEnabled(true);
-            }
-            h3.postDelayed(this, 50);
-            if ((Math.abs(caza.getX() - misil.getX()) < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
-                    caza.setVisibility(View.INVISIBLE);
+                if(caza.getVisibility()==View.INVISIBLE){
+                    caza.setX(width/2);
+                    caza.setVisibility(View.VISIBLE);
                 }
+            }
+            h3.postDelayed(this,10);
+            if(caza.getVisibility()==View.VISIBLE){
+                if ((Math.abs(caza.getX() - misil.getX()) < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
+                    caza.setVisibility(View.INVISIBLE);
+                    score+=100;
+                    scored=Integer.toString(score);
+                    tx.setText(scored);
+                }
+            }
+
 
         }
     };
