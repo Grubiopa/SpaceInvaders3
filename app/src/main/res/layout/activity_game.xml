@@ -48,4 +48,14 @@
         android:layout_alignLeft="@+id/imageButton"
         android:layout_alignStart="@+id/imageButton" />
 
+    <ImageView
+        android:layout_width="10dp"
+        android:layout_height="60dp"
+        app:srcCompat="@drawable/laserrojo"
+        android:id="@+id/laserrojo"
+        android:layout_alignTop="@+id/caza1"
+        android:layout_alignLeft="@+id/Misil"
+        android:layout_alignStart="@+id/Misil"
+        android:layout_marginTop="53dp" />
+
 </RelativeLayout>

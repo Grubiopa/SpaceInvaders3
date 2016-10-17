@@ -23,6 +23,7 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         h2.postDelayed(run, 0);
+        h4.postDelayed(run3, 0);
         /*Typeface font = Typeface.createFromAsset(getAssets(), "fonts/munro_narrow.ttf");
         tx.setTypeface(font);*/
         tx=(TextView) findViewById(R.id.score);
@@ -34,6 +35,7 @@ public class GameActivity extends AppCompatActivity {
 
     Handler h2 = new Handler();
     Handler h3 = new Handler();
+    Handler h4 = new Handler();
 
     boolean sentido = true;
     Runnable run = new Runnable() {
@@ -94,6 +96,27 @@ public class GameActivity extends AppCompatActivity {
             }
 
 
+        }
+    };
+    Runnable run3 = new Runnable() {
+
+        @Override
+        public void run() {
+            ImageView misilrojo = (ImageView) findViewById(R.id.laserrojo);
+            ImageView caza = (ImageView) findViewById(R.id.caza1);
+            DisplayMetrics metrics = new DisplayMetrics();
+            getWindowManager().getDefaultDisplay().getMetrics(metrics);
+            int width = metrics.widthPixels; // ancho absoluto en pixels
+            int height = metrics.heightPixels; // alto absoluto en pixels
+
+            if (misilrojo.getY()<=height){
+                misilrojo.setY(misilrojo.getY()+10);
+            }else{
+                misilrojo.setX(caza.getX()+ caza.getWidth()/2);
+                misilrojo.setY(caza.getY()+100);
+            }
+
+            h4.postDelayed(this, 50);
         }
     };
     public void disparo(View v){
