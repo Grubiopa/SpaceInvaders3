@@ -93,7 +93,11 @@ public class GameActivity extends AppCompatActivity {
             }
             h2.postDelayed(this,0);
             if(caza.getVisibility()==View.VISIBLE){
-                if ((caza.getX() - misil.getX() < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
+                float centreX=caza.getX() + caza.getWidth()  / 2;
+                float centreY=caza.getY() + caza.getHeight() /2;
+                int x= ((int) centreX);
+                int y= ((int) centreY);
+                if ((Math.abs(x - misil.getX()) < caza.getWidth()  / 2)&&(Math.abs(y - misil.getY()) < caza.getHeight()/2)) {
                     caza.setVisibility(View.INVISIBLE);
                     score+=100;
                     scored=Integer.toString(score);
