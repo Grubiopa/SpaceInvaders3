@@ -49,17 +49,17 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
             if(sentido){
-                caza.setX(caza.getX()+50);
+                caza.setX(caza.getX()+25);
             }else{
-                caza.setX(caza.getX()-50);
+                caza.setX(caza.getX()-25);
             }
-            if((caza.getX()+caza.getWidth() >= width - 50 )|| (caza.getX() <=50)){
+            if((caza.getX()+caza.getWidth() >= width - 25 )|| (caza.getX() <=25)){
                 sentido=!sentido;
-                caza.setY(caza.getY()+50);
+                caza.setY(caza.getY()+25);
                 if(sentido){
-                    caza.setX(caza.getX()+50);
+                    caza.setX(caza.getX()+25);
                 }else{
-                    caza.setX(caza.getX()-50);
+                    caza.setX(caza.getX()-25);
                 }
             }
             h1.postDelayed(this, 10);
@@ -79,7 +79,7 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
 
-            misil.setY(misil.getY()-200);
+            misil.setY(misil.getY()-50);
 
             if((misil.getY()+misil.getHeight() <15 ))
             {
@@ -93,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
             }
             h2.postDelayed(this,0);
             if(caza.getVisibility()==View.VISIBLE){
-                if ((Math.abs(caza.getX() - misil.getX()) < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
+                if ((caza.getX() - misil.getX() < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
                     caza.setVisibility(View.INVISIBLE);
                     score+=100;
                     scored=Integer.toString(score);
@@ -116,10 +116,16 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
             if (misilrojo.getY()<=height){
-                misilrojo.setY(misilrojo.getY()+100);
+                misilrojo.setY(misilrojo.getY()+50);
             }else{
-                misilrojo.setX(caza.getX()+ caza.getWidth()/2);
-                misilrojo.setY(caza.getY()+100);
+                if(caza.getVisibility()==View.INVISIBLE){
+                    misilrojo.setVisibility(View.INVISIBLE);
+                }else{
+                    misilrojo.setX(caza.getX()+ caza.getWidth()/2);
+                    misilrojo.setY(caza.getY()+250);
+                    misilrojo.setVisibility(View.VISIBLE);
+                }
+
             }
 
             h3.postDelayed(this, 30);
@@ -129,7 +135,7 @@ public class GameActivity extends AppCompatActivity {
         ImageView misil = (ImageView) findViewById(R.id.Misil);
         ImageButton nave = (ImageButton) findViewById(R.id.imageButton);
         misil.setX(nave.getX()+ nave.getWidth()/2);
-        misil.setY(nave.getY());
+        misil.setY(nave.getY()-200);
         misil.setVisibility(View.VISIBLE);
         nave.setEnabled(false);
         h2.postDelayed(run2, 40);
