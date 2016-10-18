@@ -1,5 +1,6 @@
 package com.example.grupo8.spaceinvaders;
 
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
@@ -24,11 +25,13 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
         h1.postDelayed(run, 0);
         h3.postDelayed(run3, 0);
+        tx = (TextView) findViewById(R.id.score);
+        Typeface font = Typeface.createFromAsset(getAssets(), "Star_Jedi_Rounded.ttf");
+        tx.setTypeface(font);
         /*Typeface font = Typeface.createFromAsset(getAssets(), "fonts/munro_narrow.ttf");
         tx.setTypeface(font);*/
-        tx=(TextView) findViewById(R.id.score);
         scored=Integer.toString(score);
-        tx.setText(scored);
+        tx.setText("PTS: "+scored);
 
 
     }
@@ -56,6 +59,9 @@ public class GameActivity extends AppCompatActivity {
             if((caza.getX()+caza.getWidth() >= width - 25 )|| (caza.getX() <=25)){
                 sentido=!sentido;
                 caza.setY(caza.getY()+25);
+                if(caza.getY()>=height/2+100){
+                    caza.setY(300);
+                }
                 if(sentido){
                     caza.setX(caza.getX()+25);
                 }else{
@@ -87,7 +93,7 @@ public class GameActivity extends AppCompatActivity {
                 h2.removeCallbacks(run2);
                 nave.setEnabled(true);
                 if(caza.getVisibility()==View.INVISIBLE){
-                    caza.setX(width/2);
+                    caza.setX(width/2-200);
                     caza.setVisibility(View.VISIBLE);
                 }
             }
@@ -101,7 +107,7 @@ public class GameActivity extends AppCompatActivity {
                     caza.setVisibility(View.INVISIBLE);
                     score+=100;
                     scored=Integer.toString(score);
-                    tx.setText(scored);
+                    tx.setText("PTS: "+scored);
                 }
             }
 
