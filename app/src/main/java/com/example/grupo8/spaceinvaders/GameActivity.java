@@ -22,8 +22,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        h2.postDelayed(run, 0);
-        h4.postDelayed(run3, 0);
+        h1.postDelayed(run, 0);
+        h3.postDelayed(run3, 0);
         /*Typeface font = Typeface.createFromAsset(getAssets(), "fonts/munro_narrow.ttf");
         tx.setTypeface(font);*/
         tx=(TextView) findViewById(R.id.score);
@@ -33,9 +33,9 @@ public class GameActivity extends AppCompatActivity {
 
     }
 
+    Handler h1 = new Handler();
     Handler h2 = new Handler();
     Handler h3 = new Handler();
-    Handler h4 = new Handler();
 
     boolean sentido = true;
     Runnable run = new Runnable() {
@@ -49,14 +49,20 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
             if(sentido){
-                caza.setX(caza.getX()+10);
+                caza.setX(caza.getX()+50);
             }else{
-                caza.setX(caza.getX()-10);
+                caza.setX(caza.getX()-50);
             }
-            if((caza.getX()+caza.getWidth() >= width - 10 )|| (caza.getX() <=10))
+            if((caza.getX()+caza.getWidth() >= width - 50 )|| (caza.getX() <=50)){
                 sentido=!sentido;
-
-            h2.postDelayed(this, 50);
+                caza.setY(caza.getY()+50);
+                if(sentido){
+                    caza.setX(caza.getX()+50);
+                }else{
+                    caza.setX(caza.getX()-50);
+                }
+            }
+            h1.postDelayed(this, 10);
 
         }
     };
@@ -73,19 +79,19 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
 
-            misil.setY(misil.getY()-10);
+            misil.setY(misil.getY()-200);
 
             if((misil.getY()+misil.getHeight() <15 ))
             {
                 misil.setVisibility(View.INVISIBLE);
-                h3.removeCallbacks(run2);
+                h2.removeCallbacks(run2);
                 nave.setEnabled(true);
                 if(caza.getVisibility()==View.INVISIBLE){
                     caza.setX(width/2);
                     caza.setVisibility(View.VISIBLE);
                 }
             }
-            h3.postDelayed(this,10);
+            h2.postDelayed(this,0);
             if(caza.getVisibility()==View.VISIBLE){
                 if ((Math.abs(caza.getX() - misil.getX()) < caza.getWidth())&&(Math.abs(caza.getY() - misil.getY()) < caza.getHeight())) {
                     caza.setVisibility(View.INVISIBLE);
@@ -110,13 +116,13 @@ public class GameActivity extends AppCompatActivity {
             int height = metrics.heightPixels; // alto absoluto en pixels
 
             if (misilrojo.getY()<=height){
-                misilrojo.setY(misilrojo.getY()+10);
+                misilrojo.setY(misilrojo.getY()+100);
             }else{
                 misilrojo.setX(caza.getX()+ caza.getWidth()/2);
                 misilrojo.setY(caza.getY()+100);
             }
 
-            h4.postDelayed(this, 50);
+            h3.postDelayed(this, 30);
         }
     };
     public void disparo(View v){
@@ -126,7 +132,7 @@ public class GameActivity extends AppCompatActivity {
         misil.setY(nave.getY());
         misil.setVisibility(View.VISIBLE);
         nave.setEnabled(false);
-        h3.postDelayed(run2, 0);
+        h2.postDelayed(run2, 40);
     }
 
 
@@ -146,9 +152,9 @@ public class GameActivity extends AppCompatActivity {
                 Float x = event.getX();
                 ImageButton boton = (ImageButton) findViewById(R.id.imageButton);
                 if (x > width/2){
-                    boton.setX(boton.getX()+10);
+                    boton.setX(boton.getX()+50);
                 }else{
-                    boton.setX(boton.getX()-10);
+                    boton.setX(boton.getX()-50);
                 }
                 return true;
 
