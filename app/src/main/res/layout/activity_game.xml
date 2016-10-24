@@ -24,7 +24,7 @@
         android:layout_height="91dp"
         android:layout_gravity="center_horizontal|bottom"
         android:background="@drawable/falcon"
-        android:id="@+id/imageButton"
+        android:id="@+id/naceAtacante"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:onClick="disparo"/>

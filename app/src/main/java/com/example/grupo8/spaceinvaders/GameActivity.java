@@ -79,7 +79,7 @@ public class GameActivity extends Activity {
         public void run() {
             ImageView misil = (ImageView) findViewById(R.id.Misil);
             ImageView caza = (ImageView) findViewById(R.id.caza1);
-            ImageButton nave = (ImageButton) findViewById(R.id.imageButton);
+            ImageButton nave = (ImageButton) findViewById(R.id.naceAtacante);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);
             int width = metrics.widthPixels; // ancho absoluto en pixels
@@ -144,7 +144,7 @@ public class GameActivity extends Activity {
     };
     public void disparo(View v){
         ImageView misil = (ImageView) findViewById(R.id.Misil);
-        ImageButton nave = (ImageButton) findViewById(R.id.imageButton);
+        ImageButton nave = (ImageButton) findViewById(R.id.naceAtacante);
         misil.setX(nave.getX()+ nave.getWidth()/2);
         misil.setY(nave.getY()-200);
         misil.setVisibility(View.VISIBLE);
@@ -167,11 +167,13 @@ public class GameActivity extends Activity {
                 int height = metrics.heightPixels; // alto absoluto en pixels
 
                 Float x = event.getX();
-                ImageButton boton = (ImageButton) findViewById(R.id.imageButton);
+                ImageButton boton = (ImageButton) findViewById(R.id.naceAtacante);
                 if (x > width/2){
                     boton.setX(boton.getX()+50);
+                    if(boton.getX()>width)boton.setX(0);
                 }else{
                     boton.setX(boton.getX()-50);
+                    if(boton.getX()<0)boton.setX((int)(width));
                 }
                 return true;
 
