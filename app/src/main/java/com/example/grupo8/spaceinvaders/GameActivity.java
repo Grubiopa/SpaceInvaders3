@@ -119,7 +119,7 @@ public class GameActivity extends Activity {
 
         @Override
         public void run() {
-            ImageView misilrojo = (ImageView) findViewById(R.id.laserrojo);
+            ImageView misilrojo = (ImageView) findViewById(R.id.laser);
             ImageView caza = (ImageView) findViewById(R.id.caza1);
             DisplayMetrics metrics = new DisplayMetrics();
             getWindowManager().getDefaultDisplay().getMetrics(metrics);

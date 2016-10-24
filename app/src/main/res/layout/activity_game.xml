@@ -40,6 +40,17 @@
         android:visibility="invisible" />
 
     <ImageView
+        android:layout_width="10dp"
+        android:layout_height="60dp"
+        android:background="@drawable/laserrojo"
+        android:layout_marginTop="53dp"
+        android:id="@+id/laser"
+        android:layout_alignTop="@+id/caza1"
+        android:layout_alignLeft="@+id/Misil"
+        android:layout_alignStart="@+id/Misil"
+        android:visibility="visible" />
+
+    <ImageView
         android:layout_width="111dp"
         android:layout_height="91dp"
         android:background="@drawable/caza"
@@ -49,15 +60,5 @@
         android:layout_alignLeft="@+id/imageButton"
         android:layout_alignStart="@+id/imageButton" />
 
-    <ImageView
-        android:layout_width="10dp"
-        android:layout_height="60dp"
-        app:srcCompat="@drawable/laserrojo"
-        android:id="@+id/laserrojo"
-        android:layout_alignTop="@+id/caza1"
-        android:layout_alignLeft="@+id/Misil"
-        android:layout_alignStart="@+id/Misil"
-        android:layout_marginTop="53dp"
-        android:visibility="visible"/>
 
 </RelativeLayout>
