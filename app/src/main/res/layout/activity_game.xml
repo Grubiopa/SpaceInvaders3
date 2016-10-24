@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/background"
+    android:background="@drawable/back"
     tools:context="com.example.grupo8.spaceinvaders.GameActivity">
 
     <TextView
@@ -57,6 +57,7 @@
         android:layout_alignTop="@+id/caza1"
         android:layout_alignLeft="@+id/Misil"
         android:layout_alignStart="@+id/Misil"
-        android:layout_marginTop="53dp" />
+        android:layout_marginTop="53dp"
+        android:visibility="visible"/>
 
 </RelativeLayout>

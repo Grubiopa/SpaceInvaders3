@@ -1,5 +1,6 @@
 package com.example.grupo8.spaceinvaders;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -13,7 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends Activity {
     private TextView tx;
     private String scored;
     private int score;
