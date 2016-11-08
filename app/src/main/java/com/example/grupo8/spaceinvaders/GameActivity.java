@@ -166,8 +166,10 @@ public class GameActivity extends Activity {
                 int width = metrics.widthPixels; // ancho absoluto en pixels
                 int height = metrics.heightPixels; // alto absoluto en pixels
 
+
                 Float x = event.getX();
                 ImageButton boton = (ImageButton) findViewById(R.id.naceAtacante);
+
                 if (x > width/2){
                     boton.setX(boton.getX()+50);
                     if(boton.getX()>width)boton.setX(0);
