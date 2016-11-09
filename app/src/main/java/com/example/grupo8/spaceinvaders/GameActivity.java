@@ -1,31 +1,58 @@
 package com.example.grupo8.spaceinvaders;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import static com.example.grupo8.spaceinvaders.R.drawable.caza;
+
 public class GameActivity extends Activity {
+    //DECLARACION DE VARIABLEs
     private TextView tx;
     private String scored;
     private int score;
+    private int width;
+    private int height;
+
+    private Handler han_MovimientoCaza = new Handler();
+    private Handler han_MisilVerde = new Handler();
+    private Handler han_MisilRojo = new Handler();
+    private boolean sentidoEnemigo = true;
+
+    private ImageView enemigo;
+    private ImageButton jugador;
+    private ImageView misilRojo;
+    private ImageView misilVerde;
+    private int densidad;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        h1.postDelayed(run, 0);
-        h3.postDelayed(run3, 0);
+
+        //MEDIDAS DEL DISPOSITIVO
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        densidad = metrics.densityDpi;
+        width = metrics.widthPixels; // ancho absoluto en pixels
+        height = metrics.heightPixels; // alto absoluto en pixels
+
+        //INICIACION DE HEBRAS CON MOVIMIENTO CONTINUO
+        han_MovimientoCaza.postDelayed(run_MovimientoCaza, 0);
+        han_MisilRojo.postDelayed(run_MisilRojo, 0);
+
+        //TXT PUNTACION
         tx = (TextView) findViewById(R.id.score);
         Typeface font = Typeface.createFromAsset(getAssets(), "Star_Jedi_Rounded.ttf");
         tx.setTypeface(font);
@@ -34,125 +61,118 @@ public class GameActivity extends Activity {
         scored=Integer.toString(score);
         tx.setText("PTS: "+scored);
 
-
+        //INICIACION DE VARIABLES QUE USAN IMAGENES
+        enemigo = (ImageView) findViewById(R.id.caza1);
+        jugador = (ImageButton) findViewById(R.id.naveJugador);
+        misilRojo = (ImageView) findViewById(R.id.misilRojo);
+        misilVerde = (ImageView) findViewById(R.id.misilVerde);
     }
 
-    Handler h1 = new Handler();
-    Handler h2 = new Handler();
-    Handler h3 = new Handler();
 
-    boolean sentido = true;
-    Runnable run = new Runnable() {
+    Runnable run_MovimientoCaza = new Runnable() {
 
         @Override
         public void run() {
-            ImageView caza = (ImageView) findViewById(R.id.caza1);
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int width = metrics.widthPixels; // ancho absoluto en pixels
-            int height = metrics.heightPixels; // alto absoluto en pixels
 
-            if(sentido){
-                caza.setX(caza.getX()+25);
+            //DIRECCION DEL ENEMIGO
+            if(sentidoEnemigo){
+                enemigo.setX(enemigo.getX()+25);
             }else{
-                caza.setX(caza.getX()-25);
+                enemigo.setX(enemigo.getX()-25);
             }
-            if((caza.getX()+caza.getWidth() >= width - 25 )|| (caza.getX() <=25)){
-                sentido=!sentido;
-                caza.setY(caza.getY()+25);
-                if(caza.getY()>=height/2+100){
-                    caza.setY(300);
-                }
-                if(sentido){
-                    caza.setX(caza.getX()+25);
-                }else{
-                    caza.setX(caza.getX()-25);
-                }
+
+            //Sentido y altura del enemigo
+            if((enemigo.getX()+ enemigo.getWidth() >= width - 25 )|| (enemigo.getX() <=25)){
+                sentidoEnemigo =!sentidoEnemigo;
+                enemigo.setY(enemigo.getY()+25);
             }
-            h1.postDelayed(this, 10);
+
+            //Sube para arriba
+            if(enemigo.getY()>=height/2+100){
+                enemigo.setY(300);
+            }
+            han_MovimientoCaza.postDelayed(this, 10);
 
         }
     };
-    Runnable run2 = new Runnable() {
+
+    Runnable run_MisilVerde = new Runnable() {
 
         @Override
         public void run() {
-            ImageView misil = (ImageView) findViewById(R.id.Misil);
-            ImageView caza = (ImageView) findViewById(R.id.caza1);
-            ImageButton nave = (ImageButton) findViewById(R.id.naceAtacante);
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int width = metrics.widthPixels; // ancho absoluto en pixels
-            int height = metrics.heightPixels; // alto absoluto en pixels
-
-
-            misil.setY(misil.getY()-50);
-
-            if((misil.getY()+misil.getHeight() <15 ))
+            //Sube el misil
+            misilVerde.setY(misilVerde.getY()-50);
+            //crearEnemigos();
+            //Misil fuera de pantalla
+            if((misilVerde.getY()+ misilVerde.getHeight() <15 ))
             {
-                misil.setVisibility(View.INVISIBLE);
-                h2.removeCallbacks(run2);
-                nave.setEnabled(true);
-                if(caza.getVisibility()==View.INVISIBLE){
-                    caza.setX(width/2-200);
-                    caza.setVisibility(View.VISIBLE);
+                //Misil desaparece y activa al jugador
+                misilVerde.setVisibility(View.INVISIBLE);
+                han_MisilVerde.removeCallbacks(run_MisilVerde);
+                jugador.setEnabled(true);
+
+                //Enemigo reaparece
+                if(enemigo.getVisibility()==View.INVISIBLE){
+                    enemigo.setX(width/2-200);
+                    enemigo.setVisibility(View.VISIBLE);
                 }
             }
-            h2.postDelayed(this,0);
-            if(caza.getVisibility()==View.VISIBLE){
-                float centreX=caza.getX() + caza.getWidth()  / 2;
-                float centreY=caza.getY() + caza.getHeight() /2;
+
+            han_MisilVerde.postDelayed(this,0);
+
+            //MUERTE DEL ENEMIGO
+            if(enemigo.getVisibility()==View.VISIBLE){
+                float centreX=enemigo.getX() + enemigo.getWidth()  / 2;
+                float centreY=enemigo.getY() + enemigo.getHeight() /2;
                 int x= ((int) centreX);
                 int y= ((int) centreY);
-                if ((Math.abs(x - misil.getX()) < caza.getWidth()  / 2)&&(Math.abs(y - misil.getY()) < caza.getHeight()/2)) {
-                    caza.setVisibility(View.INVISIBLE);
+                if ((Math.abs(x - misilVerde.getX()) < enemigo.getWidth()  / 2)&&(Math.abs(y - misilVerde.getY()) < enemigo.getHeight()/2)) {
+                    enemigo.setVisibility(View.INVISIBLE);
+                    enemigo.setY(300);
                     score+=100;
                     scored=Integer.toString(score);
                     tx.setText("PTS: "+scored);
                 }
             }
-
-
         }
     };
-    Runnable run3 = new Runnable() {
+
+    Runnable run_MisilRojo = new Runnable() {
 
         @Override
         public void run() {
-            ImageView misilrojo = (ImageView) findViewById(R.id.laser);
-            ImageView caza = (ImageView) findViewById(R.id.caza1);
-            DisplayMetrics metrics = new DisplayMetrics();
-            getWindowManager().getDefaultDisplay().getMetrics(metrics);
-            int width = metrics.widthPixels; // ancho absoluto en pixels
-            int height = metrics.heightPixels; // alto absoluto en pixels
-
-            if (misilrojo.getY()<=height){
-                misilrojo.setY(misilrojo.getY()+50);
+            //MOVIMIENTO MISIL ROJO
+            if (misilRojo.getY()<=height){
+                misilRojo.setY(misilRojo.getY()+50);
             }else{
-                if(caza.getVisibility()==View.INVISIBLE){
-                    misilrojo.setVisibility(View.INVISIBLE);
+                if(enemigo.getVisibility()==View.INVISIBLE){
+                    misilRojo.setVisibility(View.INVISIBLE);
                 }else{
-                    misilrojo.setX(caza.getX()+ caza.getWidth()/2);
-                    misilrojo.setY(caza.getY()+250);
-                    misilrojo.setVisibility(View.VISIBLE);
+                    misilRojo.setX(enemigo.getX()+ enemigo.getWidth()/2);
+                    misilRojo.setY(enemigo.getY()+(enemigo.getHeight()/2));
+                    misilRojo.setVisibility(View.VISIBLE);
                 }
-
             }
-
-            h3.postDelayed(this, 30);
+            han_MisilRojo.postDelayed(this, 30);
+            float centreX=jugador.getX() + jugador.getWidth()  / 2;
+            float centreY=jugador.getY() + jugador.getHeight() /2;
+            int x= ((int) centreX);
+            int y= ((int) centreY);
+            if ((Math.abs(x - misilRojo.getX()) < jugador.getWidth()  / 2)&&(Math.abs(y - misilRojo.getY()) < jugador.getHeight()/2)) {
+                score = 0;
+                scored=Integer.toString(score);
+                tx.setText("PTS: "+scored);
+            }
         }
     };
+
     public void disparo(View v){
-        ImageView misil = (ImageView) findViewById(R.id.Misil);
-        ImageButton nave = (ImageButton) findViewById(R.id.naceAtacante);
-        misil.setX(nave.getX()+ nave.getWidth()/2);
-        misil.setY(nave.getY()-200);
-        misil.setVisibility(View.VISIBLE);
-        nave.setEnabled(false);
-        h2.postDelayed(run2, 40);
+        misilVerde.setX(jugador.getX()+ jugador.getWidth()/2);
+        misilVerde.setY(jugador.getY()-200);
+        misilVerde.setVisibility(View.VISIBLE);
+        jugador.setEnabled(false);
+        han_MisilVerde.postDelayed(run_MisilVerde, 40);
     }
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -160,20 +180,13 @@ public class GameActivity extends Activity {
 
         switch (action) {
             case (MotionEvent.ACTION_DOWN):
-
-                DisplayMetrics metrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                int width = metrics.widthPixels; // ancho absoluto en pixels
-                int height = metrics.heightPixels; // alto absoluto en pixels
-
                 Float x = event.getX();
-                ImageButton boton = (ImageButton) findViewById(R.id.naceAtacante);
                 if (x > width/2){
-                    boton.setX(boton.getX()+50);
-                    if(boton.getX()>width)boton.setX(0);
+                    jugador.setX(jugador.getX()+50);
+                    if(jugador.getX()>width)jugador.setX(0);
                 }else{
-                    boton.setX(boton.getX()-50);
-                    if(boton.getX()<0)boton.setX((int)(width));
+                    jugador.setX(jugador.getX()-50);
+                    if(jugador.getX()<0)jugador.setX(width);
                 }
                 return true;
 
@@ -181,4 +194,14 @@ public class GameActivity extends Activity {
                 return super.onTouchEvent(event);
         }
     }
+    /*private void crearEnemigos(){
+        ImageView enemigo2 = new ImageView(this);
+        enemigo2.setImageResource(R.drawable.caza);
+        enemigo2.setX(50);
+        enemigo2.setY(300);
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
+        rl.addView(enemigo2);
+        enemigo2.getLayoutParams().height=25*(width*160)/densidad;
+        enemigo2.getLayoutParams().width=60*densidad;
+    }*/
 }

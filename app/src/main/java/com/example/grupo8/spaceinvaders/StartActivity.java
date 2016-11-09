@@ -28,4 +28,8 @@ public class StartActivity extends Activity {
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
+    public void settings(View v){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
 }
