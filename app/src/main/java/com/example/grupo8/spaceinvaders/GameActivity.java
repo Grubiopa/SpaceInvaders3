@@ -14,15 +14,20 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.security.PrivateKey;
+
 import static com.example.grupo8.spaceinvaders.R.drawable.caza;
 
 public class GameActivity extends Activity {
     //DECLARACION DE VARIABLEs
     private TextView tx;
+    private TextView txt_lives;
     private String scored;
+    private String str_lives;
     private int score;
     private int width;
     private int height;
+    private int lives=3;
 
     private Handler han_MovimientoCaza = new Handler();
     private Handler han_MisilVerde = new Handler();
@@ -54,12 +59,14 @@ public class GameActivity extends Activity {
 
         //TXT PUNTACION
         tx = (TextView) findViewById(R.id.score);
+        txt_lives = (TextView) findViewById(R.id.lives);
         Typeface font = Typeface.createFromAsset(getAssets(), "Star_Jedi_Rounded.ttf");
         tx.setTypeface(font);
-        /*Typeface font = Typeface.createFromAsset(getAssets(), "fonts/munro_narrow.ttf");
-        tx.setTypeface(font);*/
         scored=Integer.toString(score);
         tx.setText("PTS: "+scored);
+        txt_lives.setTypeface(font);
+        str_lives=Integer.toString(lives);
+        txt_lives.setText("Lives: "+str_lives);
 
         //INICIACION DE VARIABLES QUE USAN IMAGENES
         enemigo = (ImageView) findViewById(R.id.caza1);
@@ -153,16 +160,21 @@ public class GameActivity extends Activity {
                     misilRojo.setVisibility(View.VISIBLE);
                 }
             }
-            han_MisilRojo.postDelayed(this, 30);
+            //han_MisilRojo.postDelayed(this, 30);
             float centreX=jugador.getX() + jugador.getWidth()  / 2;
             float centreY=jugador.getY() + jugador.getHeight() /2;
             int x= ((int) centreX);
             int y= ((int) centreY);
-            if ((Math.abs(x - misilRojo.getX()) < jugador.getWidth()  / 2)&&(Math.abs(y - misilRojo.getY()) < jugador.getHeight()/2)) {
-                score = 0;
-                scored=Integer.toString(score);
-                tx.setText("PTS: "+scored);
+            if ((Math.abs(x - misilRojo.getX()) < jugador.getWidth()  / 2)&&(Math.abs(y - misilRojo.getY())
+                    < jugador.getHeight()/2)) {
+                if (misilRojo.getVisibility()==View.VISIBLE) {
+                    lives--;
+                    str_lives = Integer.toString(lives);
+                    txt_lives.setText("Lives: " + str_lives);
+                    misilRojo.setVisibility(View.INVISIBLE);
+                }
             }
+            han_MisilRojo.postDelayed(this, 30);
         }
     };
 
