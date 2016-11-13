@@ -1,8 +1,11 @@
 package com.example.grupo8.spaceinvaders;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.os.Bundle;
@@ -39,6 +42,7 @@ public class GameActivity extends Activity {
     private ImageView misilRojo;
     private ImageView misilVerde;
     private int densidad;
+    private MediaPlayer mp;
 
 
     @Override
@@ -73,6 +77,20 @@ public class GameActivity extends Activity {
         jugador = (ImageButton) findViewById(R.id.naveJugador);
         misilRojo = (ImageView) findViewById(R.id.misilRojo);
         misilVerde = (ImageView) findViewById(R.id.misilVerde);
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.activity_game);
+        SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
+        if(0==prefs.getInt("music", 0)){
+            mp= MediaPlayer.create(this, R.raw.music);
+            mp.start();
+        }
+
+        if(0!=prefs.getInt("theme", 0)){
+            System.out.println("ENTRA");
+            enemigo.setBackground(getResources().getDrawable(R.drawable.spaceinvaders));
+            jugador.setBackground(getResources().getDrawable(R.drawable.friendship));
+            layout.setBackground(getResources().getDrawable(R.drawable.background2));
+
+        }
     }
 
 
