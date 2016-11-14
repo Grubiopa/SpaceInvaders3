@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/galaxy"
+    android:id="@+id/settings">
 
-</LinearLayout>
+    <Button
+        android:text="Theme select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/themeselect"
+        android:layout_gravity="center"
+        android:padding="20dp"
+        android:layout_centerInParent="true"
+        android:layout_margin="20dp"
+        android:textSize="25dp"
+        android:background="@drawable/button_pattern"/>
+
+    <Button
+        android:text="Music : 0N"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/music"
+        android:padding="20dp"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/themeselect"
+        android:layout_margin="20dp"
+        android:textSize="25dp"
+        android:background="@drawable/button_pattern"
+        android:onClick="music"/>
+
+
+</RelativeLayout>
