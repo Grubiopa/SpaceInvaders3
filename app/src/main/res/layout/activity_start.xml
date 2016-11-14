@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:weightSum="1"
+    android:background="@drawable/backgroundstart"
+    tools:context="com.example.grupo8.spaceinvaders.StartActivity"
+    >
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/ajustes"
+        android:id="@+id/btn_setting"
+        android:onClick="settings"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/btn_play"
+        android:layout_alignStart="@+id/btn_play"
+        android:layout_marginBottom="87dp" />
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/play"
+        android:id="@+id/btn_play"
+        android:onClick="play"
+        android:layout_above="@+id/btn_setting"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:text="space invader"
+        android:id="@+id/textView"
+        android:textSize="35sp"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        tools:textColor="@android:color/background_light"
+        android:layout_above="@+id/textView2"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:text="Conquista la galaxia"
+        android:layout_width="230dp"
+        android:layout_height="160dp"
+        android:id="@+id/textView2"
+        android:textSize="35sp"
+        android:textColor="@android:color/holo_red_dark"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
