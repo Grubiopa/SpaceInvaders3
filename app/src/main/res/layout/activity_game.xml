@@ -69,5 +69,12 @@
         android:layout_marginRight="49dp"
         android:layout_marginEnd="49dp" />
 
+    <ImageView
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:srcCompat="@drawable/explosion"
+        android:id="@+id/explosion"
+        />
+
 
 </RelativeLayout>

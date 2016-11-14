@@ -38,6 +38,7 @@ public class GameActivity extends Activity {
     private ImageButton jugador;
     private ImageView misilRojo;
     private ImageView misilVerde;
+    private ImageView explosion;
     private int densidad;
 
 
@@ -73,6 +74,7 @@ public class GameActivity extends Activity {
         jugador = (ImageButton) findViewById(R.id.naveJugador);
         misilRojo = (ImageView) findViewById(R.id.misilRojo);
         misilVerde = (ImageView) findViewById(R.id.misilVerde);
+        explosion = (ImageView) findViewById(R.id.explosion);
     }
 
 
@@ -158,6 +160,9 @@ public class GameActivity extends Activity {
                     misilRojo.setX(enemigo.getX()+ enemigo.getWidth()/2);
                     misilRojo.setY(enemigo.getY()+(enemigo.getHeight()/2));
                     misilRojo.setVisibility(View.VISIBLE);
+                    /*if (explosion.getVisibility()==View.VISIBLE){
+                        explosion.setVisibility(View.INVISIBLE);
+                    }*/
                 }
             }
             //han_MisilRojo.postDelayed(this, 30);
@@ -172,6 +177,10 @@ public class GameActivity extends Activity {
                     str_lives = Integer.toString(lives);
                     txt_lives.setText("Lives: " + str_lives);
                     misilRojo.setVisibility(View.INVISIBLE);
+                    //explosion.setX(jugador.getX()+(jugador.getWidth()/2));
+                    //explosion.setY(jugador.getY()+(jugador.getHeight()/2));
+                    //explosion.setVisibility(View.VISIBLE);
+                    //explosion.bringToFront();
                 }
             }
             han_MisilRojo.postDelayed(this, 30);
