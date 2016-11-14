@@ -252,4 +252,24 @@ public class GameActivity extends Activity {
         enemigo2.getLayoutParams().height=25*(width*160)/densidad;
         enemigo2.getLayoutParams().width=60*densidad;
     }*/
+
+    @Override
+    public void onBackPressed(){
+        SharedPreferences prefs = this.getSharedPreferences("SimplySnake", Context.MODE_PRIVATE);
+        if(0==prefs.getInt("music", 0)){
+            mp.stop();
+        }
+        super.onBackPressed();
+    }
+   @Override
+    protected void onUserLeaveHint(){
+        SharedPreferences prefs = this.getSharedPreferences("SimplySnake", Context.MODE_PRIVATE);
+        if(0==prefs.getInt("MusiC", 0)){
+            mp.stop();
+        }
+        super.onUserLeaveHint();
+    }
+
+
+
 }
