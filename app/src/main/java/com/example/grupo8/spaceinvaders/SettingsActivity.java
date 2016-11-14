@@ -35,29 +35,10 @@ public class SettingsActivity extends Activity {
         SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         RelativeLayout theme = (RelativeLayout) findViewById(R.id.settings);
-        /*if(score>prefs.getInt("HighScore", 0)){
-            editor.putInt("HighScore", score);
-        }*/
         if(0!=prefs.getInt("theme", 0))
             theme.setBackground( getResources().getDrawable(R.drawable.spaceinvadersback));
         if(0!=prefs.getInt("music", 0))
             musicbtn.setText("Music : 0FF");
-        /*editor.apply();
-        Intent intent = new Intent(this,LostScreen.class);
-        intent.putExtra("score",score);
-        /*setting preferences
-        SharedPreferences prefs = this.getSharedPreferences("SimplySnake", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        if(score>prefs.getInt("HighScore", 0)){
-            editor.putInt("HighScore", score);
-        }
-        if(0==prefs.getInt("MusiC", 0))
-            mp.stop();
-        editor.apply();
-        Intent intent = new Intent(this,LostScreen.class);
-        intent.putExtra("score",score);
-        finish();
-        startActivity(intent);*/
     }
 
     @Override
