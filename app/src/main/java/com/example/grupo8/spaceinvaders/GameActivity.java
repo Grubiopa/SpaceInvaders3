@@ -2,6 +2,7 @@ package com.example.grupo8.spaceinvaders;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
@@ -203,6 +204,9 @@ public class GameActivity extends Activity {
                     lives--;
                     str_lives = Integer.toString(lives);
                     txt_lives.setText("Lives: " + str_lives);
+                    if(lives == 0){
+                       end();
+                    }
                     misilRojo.setVisibility(View.INVISIBLE);
                     //explosion.setX(jugador.getX()+(jugador.getWidth()/2));
                     //explosion.setY(jugador.getY()+(jugador.getHeight()/2));
@@ -264,12 +268,17 @@ public class GameActivity extends Activity {
    @Override
     protected void onUserLeaveHint(){
         SharedPreferences prefs = this.getSharedPreferences("SimplySnake", Context.MODE_PRIVATE);
-        if(0==prefs.getInt("MusiC", 0)){
+        if(0==prefs.getInt("MusiC", 0) &&  mp!=null){
             mp.stop();
         }
         super.onUserLeaveHint();
     }
 
+    public void end(){
+        Intent intent = new Intent(this, EndActivity.class);
+        intent.putExtra("points",scored);
+        startActivity(intent);
+    }
 
 
 }

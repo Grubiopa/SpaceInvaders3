@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false"
+    android:weightSum="1"
+    android:background="@drawable/backgroundstart"
+    tools:context="com.example.grupo8.spaceinvaders.StartActivity"
+    >
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/play"
+        android:id="@+id/btn_restart"
+        android:onClick="restart"
+        android:layout_marginTop="75dp"
+        android:layout_below="@+id/txt_gameOver"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="Puntuacion:"
+        android:id="@+id/txt_points"
+        android:textSize="30sp"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        tools:textColor="@android:color/background_light"
+        android:layout_below="@+id/txt_gameOver"
+        android:layout_alignLeft="@+id/txt_gameOver"
+        android:layout_alignStart="@+id/txt_gameOver" />
+
+    <TextView
+        android:text="Game over"
+        android:id="@+id/txt_gameOver"
+        android:textSize="35sp"
+        android:layout_width="320dp"
+        android:layout_height="60dp"
+        tools:textColor="@android:color/background_light"
+        android:layout_marginTop="118dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@drawable/inicio"
+        android:onClick="menu"
+        android:id="@+id/btn_inicio"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/btn_restart"
+        android:layout_alignLeft="@+id/btn_restart"
+        android:layout_alignStart="@+id/btn_restart" />
+</RelativeLayout>
