@@ -10,6 +10,7 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -139,7 +140,7 @@ public class GameActivity extends Activity {
         public void run() {
             //Sube el misil
             misilVerde.setY(misilVerde.getY()-50);
-            //crearEnemigos();
+            crearEnemigos();
             //Misil fuera de pantalla
             if((misilVerde.getY()+ misilVerde.getHeight() <15 ))
             {
@@ -246,16 +247,24 @@ public class GameActivity extends Activity {
                 return super.onTouchEvent(event);
         }
     }
-    /*private void crearEnemigos(){
+    private void crearEnemigos(){
+        SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
         ImageView enemigo2 = new ImageView(this);
-        enemigo2.setImageResource(R.drawable.caza);
+        if(0!=prefs.getInt("theme", 0)){
+            enemigo2.setImageResource(R.drawable.spaceinvaders);
+        }else{
+            enemigo2.setImageResource(R.drawable.caza);
+        }
+        //enemigo2.setImageResource(R.drawable.caza);
         enemigo2.setX(50);
         enemigo2.setY(300);
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
         rl.addView(enemigo2);
-        enemigo2.getLayoutParams().height=25*(width*160)/densidad;
-        enemigo2.getLayoutParams().width=60*densidad;
-    }*/
+        enemigo2.getLayoutParams().height=150
+        enemigo2.getLayoutParams().width=enemigo.getWidth();
+        double aux = enemigo2.getWidth();
+
+    }
 
     @Override
     public void onBackPressed(){
