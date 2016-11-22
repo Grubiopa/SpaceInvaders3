@@ -5,12 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -18,10 +16,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import java.security.PrivateKey;
-
-import static com.example.grupo8.spaceinvaders.R.drawable.caza;
 
 public class GameActivity extends Activity {
     //DECLARACION DE VARIABLEs
@@ -49,6 +43,7 @@ public class GameActivity extends Activity {
     private MediaPlayer mp;
 
     private ImageView enemigos[] = new ImageView[20];
+    int enemiesInitialHeight =300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +100,7 @@ public class GameActivity extends Activity {
             layout.setBackground(getResources().getDrawable(R.drawable.background2));
 
         }*/
+        crearEnemigos();
     }
 
 
@@ -115,21 +111,42 @@ public class GameActivity extends Activity {
 
             //DIRECCION DEL ENEMIGO
             if(sentidoEnemigo){
+                for (int i=0;i<20;i++){
+                    enemigos[i].setX(enemigos[i].getX()+25);
+                }
                 enemigo.setX(enemigo.getX()+25);
             }else{
+                for (int i=0;i<20;i++){
+                    enemigos[i].setX(enemigos[i].getX()-25);
+                }
                 enemigo.setX(enemigo.getX()-25);
             }
 
             //Sentido y altura del enemigo
-            if((enemigo.getX()+ enemigo.getWidth() >= width - 25 )|| (enemigo.getX() <=25)){
+
+            if ((enemigos[4].getX()+ enemigos[4].getLayoutParams().width >= width - 25 )|| (enemigos[0].getX() <=25)){
+                sentidoEnemigo =!sentidoEnemigo;
+                for(int i = 0;i<20;i++){
+                    enemigos[i].setY(enemigos[i].getY()+25);
+                }
+            }
+            /*if((enemigo.getX()+ enemigo.getWidth() >= width - 25 )|| (enemigo.getX() <=25)){
                 sentidoEnemigo =!sentidoEnemigo;
                 enemigo.setY(enemigo.getY()+25);
-            }
+            }*/
 
             //Sube para arriba
-            if(enemigo.getY()>=height/2+100){
-                enemigo.setY(300);
+            if(enemigos[0].getY()>=height/2+100){
+            for(int i=0;i<20;i++){
+                enemigos[i].setY(enemiesInitialHeight);
+                if (i%5==4){
+                    enemiesInitialHeight +=60;
+                }
             }
+            enemiesInitialHeight = 300;
+            }
+            //enemigo.setY(300);
+
             han_MovimientoCaza.postDelayed(this, 10);
 
         }
@@ -141,7 +158,6 @@ public class GameActivity extends Activity {
         public void run() {
             //Sube el misil
             misilVerde.setY(misilVerde.getY()-50);
-            crearEnemigos();
             //Misil fuera de pantalla
             if((misilVerde.getY()+ misilVerde.getHeight() <15 ))
             {
@@ -250,8 +266,8 @@ public class GameActivity extends Activity {
     }
     private void crearEnemigos(){
         SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
-        int nextHeight=50;
-        int nextWidth=300;
+        int nextHeight= enemiesInitialHeight;
+        int nextWidth=10;
         int opcion=0;
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
 
@@ -276,7 +292,7 @@ public class GameActivity extends Activity {
 
             if (i%5==4){
                 nextHeight+=60;
-                nextWidth = 300;
+                nextWidth = 10;
             }else{
                 nextWidth +=100;
             }
