@@ -48,6 +48,7 @@ public class GameActivity extends Activity {
     private int densidad;
     private MediaPlayer mp;
 
+    private ImageView enemigos[] = new ImageView[20];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -249,22 +250,40 @@ public class GameActivity extends Activity {
     }
     private void crearEnemigos(){
         SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
-        ImageView enemigo2 = new ImageView(this);
-        if(0!=prefs.getInt("theme", 0)){
-            enemigo2.setImageResource(R.drawable.spaceinvaders);
-        }else{
-            enemigo2.setImageResource(R.drawable.caza);
-        }
-        //enemigo2.setImageResource(R.drawable.caza);
-        enemigo2.setX(50);
-        enemigo2.setY(300);
+        int nextHeight=50;
+        int nextWidth=300;
+        int opcion=0;
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
-        rl.addView(enemigo2);
-        enemigo2.getLayoutParams().height=150
-        enemigo2.getLayoutParams().width=enemigo.getWidth();
-        double aux = enemigo2.getWidth();
 
+        if(0!=prefs.getInt("theme", 0)){
+            opcion = 0;
+        }else{
+            opcion = 1;
+        }
+
+        for (int i=0; i<20;i++){
+            enemigos[i]= new ImageView(this);
+            enemigos[i].setX(nextWidth);
+            enemigos[i].setY(nextHeight);
+            if (opcion==0){
+                enemigos[i].setImageResource(R.drawable.spaceinvaders);
+            }else{
+                enemigos[i].setImageResource(R.drawable.caza);
+            }
+            rl.addView(enemigos[i]);
+            enemigos[i].getLayoutParams().height=50;
+            enemigos[i].getLayoutParams().width=150;
+
+            if (i%5==4){
+                nextHeight+=60;
+                nextWidth = 300;
+            }else{
+                nextWidth +=100;
+            }
+        }
     }
+
+
 
     @Override
     public void onBackPressed(){
