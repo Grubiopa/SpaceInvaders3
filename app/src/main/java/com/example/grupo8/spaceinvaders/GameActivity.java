@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,8 +45,10 @@ public class GameActivity extends Activity {
     private ImageView misilVerde;
     private ImageView explosion;
     private RelativeLayout layout;
+    private LinearLayout layoutenemigos;
     private int densidad;
     private MediaPlayer mp;
+    ImageView enemigo2;
 
 
     @Override
@@ -93,7 +96,7 @@ public class GameActivity extends Activity {
             mp= MediaPlayer.create(this, R.raw.music);
             mp.start();
         }
-
+        crearEnemigos();
         /*if(0!=prefs.getInt("theme", 0)){
             //enemigo.setImageResource(R.drawable.spaceinvaders);
             //jugador.setImageResource(R.drawable.friendship);
@@ -113,20 +116,20 @@ public class GameActivity extends Activity {
 
             //DIRECCION DEL ENEMIGO
             if(sentidoEnemigo){
-                enemigo.setX(enemigo.getX()+25);
+                enemigo2.setX(enemigo2.getX()+25);
             }else{
-                enemigo.setX(enemigo.getX()-25);
+                enemigo2.setX(enemigo2.getX()-25);
             }
 
             //Sentido y altura del enemigo
-            if((enemigo.getX()+ enemigo.getWidth() >= width - 25 )|| (enemigo.getX() <=25)){
+            if((enemigo2.getX()+ enemigo2.getWidth() >= width - 25 )|| (enemigo2.getX() <=25)){
                 sentidoEnemigo =!sentidoEnemigo;
-                enemigo.setY(enemigo.getY()+25);
+                enemigo2.setY(enemigo2.getY()+25);
             }
 
             //Sube para arriba
-            if(enemigo.getY()>=height/2+100){
-                enemigo.setY(300);
+            if(enemigo2.getY()>=height/2+100){
+                enemigo2.setY(300);
             }
             han_MovimientoCaza.postDelayed(this, 10);
 
@@ -139,7 +142,6 @@ public class GameActivity extends Activity {
         public void run() {
             //Sube el misil
             misilVerde.setY(misilVerde.getY()-50);
-            //crearEnemigos();
             //Misil fuera de pantalla
             if((misilVerde.getY()+ misilVerde.getHeight() <15 ))
             {
@@ -246,16 +248,21 @@ public class GameActivity extends Activity {
                 return super.onTouchEvent(event);
         }
     }
-    /*private void crearEnemigos(){
-        ImageView enemigo2 = new ImageView(this);
-        enemigo2.setImageResource(R.drawable.caza);
-        enemigo2.setX(50);
-        enemigo2.setY(300);
-        RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
-        rl.addView(enemigo2);
-        enemigo2.getLayoutParams().height=25*(width*160)/densidad;
-        enemigo2.getLayoutParams().width=60*densidad;
-    }*/
+
+    private void crearEnemigos(){
+        //layoutenemigos=new LinearLayout();
+        for(int i=0;i<8;i++){
+            enemigo2 = new ImageView(this);
+            enemigo2.setImageResource(R.drawable.caza);
+            enemigo2.setX(50+150*i);
+            enemigo2.setY(300);
+            RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
+            rl.addView(enemigo2);
+            enemigo2.getLayoutParams().height=50*width/densidad;
+            enemigo2.getLayoutParams().width=50*height/densidad;
+            //layoutenemigos.addView(enemigo2);
+        }
+    }
 
     @Override
     public void onBackPressed(){
