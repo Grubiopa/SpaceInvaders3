@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.Random;
+
 public class GameActivity extends Activity {
     //DECLARACION DE VARIABLEs
     private TextView tx;
@@ -44,6 +46,10 @@ public class GameActivity extends Activity {
 
     private ImageView enemigos[] = new ImageView[20];
     int enemiesInitialHeight =300;
+
+    private Random rnd = new Random();
+    private int enemigoselccionado;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,8 +209,10 @@ public class GameActivity extends Activity {
                 if(enemigo.getVisibility()==View.INVISIBLE){
                     misilRojo.setVisibility(View.INVISIBLE);
                 }else{
-                    misilRojo.setX(enemigo.getX()+ enemigo.getWidth()/2);
-                    misilRojo.setY(enemigo.getY()+(enemigo.getHeight()/2));
+
+                    enemigoselccionado = rnd.nextInt(20);
+                    misilRojo.setX(enemigos[enemigoselccionado].getX()+ enemigos[enemigoselccionado].getLayoutParams().width/2);
+                    misilRojo.setY(enemigos[enemigoselccionado].getY()+(enemigos[enemigoselccionado].getLayoutParams().height/2));
                     misilRojo.setVisibility(View.VISIBLE);
                     /*if (explosion.getVisibility()==View.VISIBLE){
                         explosion.setVisibility(View.INVISIBLE);
@@ -226,10 +234,7 @@ public class GameActivity extends Activity {
                        end();
                     }
                     misilRojo.setVisibility(View.INVISIBLE);
-                    //explosion.setX(jugador.getX()+(jugador.getWidth()/2));
-                    //explosion.setY(jugador.getY()+(jugador.getHeight()/2));
-                    //explosion.setVisibility(View.VISIBLE);
-                    //explosion.bringToFront();
+
                 }
             }
             han_MisilRojo.postDelayed(this, 30);
