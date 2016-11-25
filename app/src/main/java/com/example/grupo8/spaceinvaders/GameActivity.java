@@ -124,13 +124,14 @@ public class GameActivity extends Activity {
             }
 
             //Sentido y altura del enemigo
+            calcularSentido();
 
-            if ((enemigos[4].getX()+ enemigos[4].getLayoutParams().width >= width - 25 )|| (enemigos[0].getX() <=25)){
+            /*if ((enemigos[4].getX()+ enemigos[4].getLayoutParams().width >= width - 25 )|| (enemigos[0].getX() <=25)){
                 sentidoEnemigo =!sentidoEnemigo;
                 for(int i = 0;i<20;i++){
                     enemigos[i].setY(enemigos[i].getY()+25);
                 }
-            }
+            }*/
             /*if((enemigo.getX()+ enemigo.getWidth() >= width - 25 )|| (enemigo.getX() <=25)){
                 sentidoEnemigo =!sentidoEnemigo;
                 enemigo.setY(enemigo.getY()+25);
@@ -363,6 +364,94 @@ public class GameActivity extends Activity {
             }
         }
 
+    }
+
+    private void calcularSentido(){
+        if(sentidoEnemigo){
+            if (enemigos[4].getVisibility()==View.VISIBLE
+                    ||enemigos[9].getVisibility()==View.VISIBLE
+                    ||enemigos[14].getVisibility()==View.VISIBLE
+                    ||enemigos[19].getVisibility()==View.VISIBLE){
+                if (enemigos[4].getX()+ enemigos[4].getLayoutParams().width >= width - 25 )
+                {
+                    cambio();
+                }
+            }else if (enemigos[3].getVisibility()==View.VISIBLE
+                    ||enemigos[8].getVisibility()==View.VISIBLE
+                    ||enemigos[13].getVisibility()==View.VISIBLE
+                    ||enemigos[18].getVisibility()==View.VISIBLE){
+                if (enemigos[3].getX()+ enemigos[3].getLayoutParams().width >= width - 25 )
+                {
+                    cambio();
+                }
+            } else if (enemigos[2].getVisibility()==View.VISIBLE
+                    ||enemigos[7].getVisibility()==View.VISIBLE
+                    ||enemigos[12].getVisibility()==View.VISIBLE
+                    ||enemigos[17].getVisibility()==View.VISIBLE){
+                if (enemigos[2].getX()+ enemigos[2].getLayoutParams().width >= width - 25 )
+                {
+                    cambio();
+                }
+            } else if (enemigos[1].getVisibility()==View.VISIBLE
+                    ||enemigos[6].getVisibility()==View.VISIBLE
+                    ||enemigos[11].getVisibility()==View.VISIBLE
+                    ||enemigos[16].getVisibility()==View.VISIBLE){
+                if (enemigos[1].getX()+ enemigos[1].getLayoutParams().width >= width - 25 )
+                {
+                    cambio();
+                }
+            }else{
+                if (enemigos[0].getX()+ enemigos[0].getLayoutParams().width >= width - 25 )
+                {
+                    cambio();
+                }
+            }
+        }else{
+            if (enemigos[0].getVisibility()==View.VISIBLE
+                    ||enemigos[5].getVisibility()==View.VISIBLE
+                    ||enemigos[10].getVisibility()==View.VISIBLE
+                    ||enemigos[15].getVisibility()==View.VISIBLE){
+                if (enemigos[0].getX() <=25 )
+                {
+                    cambio();
+                }
+            }else if (enemigos[1].getVisibility()==View.VISIBLE
+                    ||enemigos[6].getVisibility()==View.VISIBLE
+                    ||enemigos[11].getVisibility()==View.VISIBLE
+                    ||enemigos[16].getVisibility()==View.VISIBLE){
+                if (enemigos[1].getX() <=25 )
+                {
+                    cambio();
+                }
+            } else if (enemigos[2].getVisibility()==View.VISIBLE
+                    ||enemigos[7].getVisibility()==View.VISIBLE
+                    ||enemigos[12].getVisibility()==View.VISIBLE
+                    ||enemigos[17].getVisibility()==View.VISIBLE){
+                if (enemigos[2].getX() <=25)
+                {
+                    cambio();
+                }
+            } else if (enemigos[3].getVisibility()==View.VISIBLE
+                    ||enemigos[8].getVisibility()==View.VISIBLE
+                    ||enemigos[13].getVisibility()==View.VISIBLE
+                    ||enemigos[18].getVisibility()==View.VISIBLE){
+                if (enemigos[3].getX() <=25 )
+                {
+                    cambio();
+                }
+            }else{
+                if (enemigos[4].getX() <=25 )
+                {
+                    cambio();
+                }
+            }
+        }
+    }
+    private void cambio(){
+        sentidoEnemigo = !sentidoEnemigo;
+        for(int i = 0;i<20;i++){
+            enemigos[i].setY(enemigos[i].getY()+25);
+        }
     }
 
 }
