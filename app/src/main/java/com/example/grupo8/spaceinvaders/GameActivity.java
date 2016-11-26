@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.security.PrivateKey;
+import java.util.Random;
 
 import static com.example.grupo8.spaceinvaders.R.drawable.caza;
 
@@ -48,7 +49,10 @@ public class GameActivity extends Activity {
     private LinearLayout layoutenemigos;
     private int densidad;
     private MediaPlayer mp;
-    ImageView enemigo2;
+    private ImageView enemigo2;
+    private ImageView enemigos[] = new ImageView[20];
+    private int enemiesInitialHeight =300;
+    private boolean enemigomuerto = false;
 
 
     @Override
@@ -85,7 +89,6 @@ public class GameActivity extends Activity {
         txt_lives.setText("Lives: "+str_lives);
 
         //INICIACION DE VARIABLES QUE USAN IMAGENES
-        enemigo = (ImageView) findViewById(R.id.caza1);
         jugador = (ImageButton) findViewById(R.id.naveJugador);
         misilRojo = (ImageView) findViewById(R.id.misilRojo);
         misilVerde = (ImageView) findViewById(R.id.misilVerde);
@@ -97,15 +100,6 @@ public class GameActivity extends Activity {
             mp.start();
         }
         crearEnemigos();
-        /*if(0!=prefs.getInt("theme", 0)){
-            //enemigo.setImageResource(R.drawable.spaceinvaders);
-            //jugador.setImageResource(R.drawable.friendship);
-            //layout.setBackgroundResource(R.drawable.background2);
-            enemigo.setBackground(getResources().getDrawable(R.drawable.spaceinvaders));
-            jugador.setBackground(getResources().getDrawable(R.drawable.friendship));
-            layout.setBackground(getResources().getDrawable(R.drawable.background2));
-
-        }*/
     }
 
 
@@ -116,20 +110,32 @@ public class GameActivity extends Activity {
 
             //DIRECCION DEL ENEMIGO
             if(sentidoEnemigo){
-                enemigo2.setX(enemigo2.getX()+25);
+                for (int i=0;i<20;i++){
+                    enemigos[i].setX(enemigos[i].getX()+5);
+                }
             }else{
-                enemigo2.setX(enemigo2.getX()-25);
+                for (int i=0;i<20;i++){
+                    enemigos[i].setX(enemigos[i].getX()-5);
+                }
             }
 
             //Sentido y altura del enemigo
-            if((enemigo2.getX()+ enemigo2.getWidth() >= width - 25 )|| (enemigo2.getX() <=25)){
+            if((enemigos[4].getX()+enemigos[4].getWidth() >= width+50  )|| (enemigos[0].getX() <=0)){
                 sentidoEnemigo =!sentidoEnemigo;
-                enemigo2.setY(enemigo2.getY()+25);
+                for(int i = 0;i<20;i++){
+                    enemigos[i].setY(enemigos[i].getY()+10);
+                }
             }
 
             //Sube para arriba
-            if(enemigo2.getY()>=height/2+100){
-                enemigo2.setY(300);
+            if(enemigos[0].getY()>=height/2+100){
+                for(int i=0;i<20;i++){
+                    enemigos[i].setY(enemiesInitialHeight);
+                    if (i%5==4){
+                        enemiesInitialHeight +=60;
+                    }
+                }
+                enemiesInitialHeight = 300;
             }
             han_MovimientoCaza.postDelayed(this, 10);
 
@@ -149,29 +155,39 @@ public class GameActivity extends Activity {
                 misilVerde.setVisibility(View.INVISIBLE);
                 han_MisilVerde.removeCallbacks(run_MisilVerde);
                 jugador.setEnabled(true);
+                enemigomuerto=false;
 
-                //Enemigo reaparece
-                if(enemigo.getVisibility()==View.INVISIBLE){
-                    enemigo.setX(width/2-200);
-                    enemigo.setVisibility(View.VISIBLE);
+                //Enemigos reaparecen
+                int j = 0;
+                while(j<20 && enemigos[j].getVisibility()==View.INVISIBLE){
+                    j++;
+                }
+                if(j==20){
+                    crearEnemigos();
                 }
             }
 
             han_MisilVerde.postDelayed(this,0);
-
             //MUERTE DEL ENEMIGO
-            if(enemigo.getVisibility()==View.VISIBLE){
-                float centreX=enemigo.getX() + enemigo.getWidth()  / 2;
-                float centreY=enemigo.getY() + enemigo.getHeight() /2;
-                int x= ((int) centreX);
-                int y= ((int) centreY);
-                if ((Math.abs(x - misilVerde.getX()) < enemigo.getWidth()  / 2)&&(Math.abs(y - misilVerde.getY()) < enemigo.getHeight()/2)) {
-                    enemigo.setVisibility(View.INVISIBLE);
-                    enemigo.setY(300);
-                    score+=100;
-                    scored=Integer.toString(score);
-                    tx.setText("PTS: "+scored);
+
+            int i = 0;
+            while (i<20 && !enemigomuerto){
+                if (enemigos[i].getVisibility()==View.VISIBLE){
+                    float centreX=enemigos[i].getX() + enemigos[i].getLayoutParams().width  / 2;
+                    float centreY=enemigos[i].getY() + enemigos[i].getLayoutParams().width /2;
+                    int x= ((int) centreX);
+                    int y= ((int) centreY);
+                    if ((Math.abs(x - misilVerde.getX()) < enemigos[i].getLayoutParams().width / 2)&&
+                            (Math.abs(y - misilVerde.getY()) <enemigos[i].getLayoutParams().height/2)) {
+                        enemigos[i].setVisibility(View.INVISIBLE);
+                        score+=100;
+                        scored=Integer.toString(score);
+                        tx.setText("PTS: "+scored);
+                        enemigomuerto = true;
+                        misilVerde.setVisibility(View.INVISIBLE);
+                    }
                 }
+                i++;
             }
         }
     };
@@ -184,11 +200,13 @@ public class GameActivity extends Activity {
             if (misilRojo.getY()<=height){
                 misilRojo.setY(misilRojo.getY()+50);
             }else{
-                if(enemigo.getVisibility()==View.INVISIBLE){
+                Random rnd = new Random();
+                int enemigoSelccionado= rnd.nextInt(20);
+                if(enemigos[enemigoSelccionado].getVisibility()==View.INVISIBLE){
                     misilRojo.setVisibility(View.INVISIBLE);
                 }else{
-                    misilRojo.setX(enemigo.getX()+ enemigo.getWidth()/2);
-                    misilRojo.setY(enemigo.getY()+(enemigo.getHeight()/2));
+                    misilRojo.setX(enemigos[enemigoSelccionado].getX()+ enemigos[enemigoSelccionado].getLayoutParams().width/2);
+                    misilRojo.setY(enemigos[enemigoSelccionado].getY()+(enemigos[enemigoSelccionado].getLayoutParams().height/2));
                     misilRojo.setVisibility(View.VISIBLE);
                     /*if (explosion.getVisibility()==View.VISIBLE){
                         explosion.setVisibility(View.INVISIBLE);
@@ -207,17 +225,15 @@ public class GameActivity extends Activity {
                     str_lives = Integer.toString(lives);
                     txt_lives.setText("Lives: " + str_lives);
                     if(lives == 0){
-                       end();
+                        end();
                     }
                     misilRojo.setVisibility(View.INVISIBLE);
-                    //explosion.setX(jugador.getX()+(jugador.getWidth()/2));
-                    //explosion.setY(jugador.getY()+(jugador.getHeight()/2));
-                    //explosion.setVisibility(View.VISIBLE);
-                    //explosion.bringToFront();
+
                 }
             }
             han_MisilRojo.postDelayed(this, 30);
         }
+
     };
 
     public void disparo(View v){
@@ -250,17 +266,37 @@ public class GameActivity extends Activity {
     }
 
     private void crearEnemigos(){
-        //layoutenemigos=new LinearLayout();
-        for(int i=0;i<8;i++){
-            enemigo2 = new ImageView(this);
-            enemigo2.setImageResource(R.drawable.caza);
-            enemigo2.setX(50+150*i);
-            enemigo2.setY(300);
-            RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
-            rl.addView(enemigo2);
-            enemigo2.getLayoutParams().height=50*width/densidad;
-            enemigo2.getLayoutParams().width=50*height/densidad;
-            //layoutenemigos.addView(enemigo2);
+        SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
+        int nextHeight= enemiesInitialHeight;
+        int nextWidth=100;
+        int opcion=0;
+        RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
+
+        if(0!=prefs.getInt("theme", 0)){
+            opcion = 0;
+        }else{
+            opcion = 1;
+        }
+
+        for (int i=0; i<20;i++){
+            enemigos[i]= new ImageView(this);
+            enemigos[i].setX(nextWidth);
+            enemigos[i].setY(nextHeight);
+            if (opcion==0){
+                enemigos[i].setImageResource(R.drawable.spaceinvaders);
+            }else{
+                enemigos[i].setImageResource(R.drawable.caza);
+            }
+            rl.addView(enemigos[i]);
+            enemigos[i].getLayoutParams().height=100*width/densidad;
+            enemigos[i].getLayoutParams().width=100*height/densidad;
+
+            if (i%5==4){
+                nextHeight+=200;
+                nextWidth = 100;
+            }else{
+                nextWidth +=180;
+            }
         }
     }
 
@@ -286,6 +322,7 @@ public class GameActivity extends Activity {
         intent.putExtra("points",scored);
         startActivity(intent);
     }
+
 
 
 }

@@ -49,14 +49,6 @@
         android:layout_alignStart="@+id/misilVerde"
         android:visibility="visible" />
 
-    <ImageView
-        android:layout_height="50dp"
-        android:layout_width="50dp"
-        android:background="@drawable/spaceinvaders"
-        android:id="@+id/caza1"
-        android:layout_marginTop="80dp"
-        android:layout_alignParentTop="true"
-         />
 
     <TextView
         android:layout_width="wrap_content"
