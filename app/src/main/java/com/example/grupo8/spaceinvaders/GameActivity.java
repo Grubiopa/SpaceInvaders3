@@ -33,7 +33,7 @@ public class GameActivity extends Activity {
     private int score;
     private int width;
     private int height;
-    private int lives=300;
+    private int lives=3;
 
     private Handler han_MovimientoCaza = new Handler();
     private Handler han_MisilVerde = new Handler();
@@ -188,6 +188,15 @@ public class GameActivity extends Activity {
                             (Math.abs(y - misilVerde.getY()) <enemigos[i].getLayoutParams().height/2)) {
                         enemigos[i].setVisibility(View.INVISIBLE);
                         score+=100;
+                        if(score==300){
+                            lives++;
+                        }
+                        if(score==500){
+                            lives+=2;
+                        }
+                        if(score==1000){
+                            lives+=5;
+                        }
                         scored=Integer.toString(score);
                         tx.setText("PTS: "+scored);
                         enemigomuerto = true;
@@ -330,7 +339,7 @@ public class GameActivity extends Activity {
 
     private void reaperecerEnemigos(){
         int nextHeight= enemiesInitialHeight;
-        int nextWidth=10;
+        int nextWidth=100;
         for(int i = 0;i<20;i++){
             enemigos[i].setVisibility(View.VISIBLE);
             enemigos[i].setX(nextWidth);
@@ -339,7 +348,7 @@ public class GameActivity extends Activity {
                 nextHeight+=100;
                 nextWidth = 100;
             }else{
-                nextWidth +=100;
+                nextWidth +=180;
             }
         }
 
