@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
@@ -14,10 +15,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.security.PrivateKey;
 import java.util.Random;
+
+import static com.example.grupo8.spaceinvaders.R.drawable.caza;
 
 public class GameActivity extends Activity {
     //DECLARACION DE VARIABLEs
@@ -28,7 +33,7 @@ public class GameActivity extends Activity {
     private int score;
     private int width;
     private int height;
-    private int lives=300;
+    private int lives=3;
 
     private Handler han_MovimientoCaza = new Handler();
     private Handler han_MisilVerde = new Handler();
@@ -40,12 +45,12 @@ public class GameActivity extends Activity {
     private ImageView misilRojo;
     private ImageView misilVerde;
     private RelativeLayout layout;
+    private LinearLayout layoutenemigos;
     private int densidad;
     private MediaPlayer mp;
-
+    private ImageView enemigo2;
     private ImageView enemigos[] = new ImageView[20];
-    int enemiesInitialHeight =300;
-
+    private int enemiesInitialHeight =300;
     private boolean enemigomuerto = false;
 
 
@@ -93,16 +98,6 @@ public class GameActivity extends Activity {
             mp= MediaPlayer.create(this, R.raw.music);
             mp.start();
         }
-
-        /*if(0!=prefs.getInt("theme", 0)){
-            //enemigo.setImageResource(R.drawable.spaceinvaders);
-            //jugador.setImageResource(R.drawable.friendship);
-            //layout.setBackgroundResource(R.drawable.background2);
-            enemigo.setBackground(getResources().getDrawable(R.drawable.spaceinvaders));
-            jugador.setBackground(getResources().getDrawable(R.drawable.friendship));
-            layout.setBackground(getResources().getDrawable(R.drawable.background2));
-
-        }*/
         crearEnemigos();
     }
 
@@ -115,11 +110,11 @@ public class GameActivity extends Activity {
             //DIRECCION DEL ENEMIGO
             if(sentidoEnemigo){
                 for (int i=0;i<20;i++){
-                    enemigos[i].setX(enemigos[i].getX()+25);
+                    enemigos[i].setX(enemigos[i].getX()+5);
                 }
             }else{
                 for (int i=0;i<20;i++){
-                    enemigos[i].setX(enemigos[i].getX()-25);
+                    enemigos[i].setX(enemigos[i].getX()-5);
                 }
             }
 
@@ -139,15 +134,13 @@ public class GameActivity extends Activity {
 
             //Sube para arriba
             if(enemigos[0].getY()>=height/2+100){
-            for(int i=0;i<20;i++){
-                enemigos[i].setY(enemiesInitialHeight);
-                if (i%5==4){
-                    enemiesInitialHeight +=60;
+                for(int i=0;i<20;i++){
+                    enemigos[i].setY(enemiesInitialHeight);
+                    if (i%5==4){
+                        enemiesInitialHeight +=60;
+                    }
                 }
-            }
-            enemiesInitialHeight = 300;
-            }
-            //enemigo.setY(300);
+                enemiesInitialHeight = 300;
 
             han_MovimientoCaza.postDelayed(this, 10);
 
@@ -180,6 +173,7 @@ public class GameActivity extends Activity {
             }
 
             han_MisilVerde.postDelayed(this,0);
+
             //MUERTE DEL ENEMIGO
 
             int i = 0;
@@ -201,20 +195,6 @@ public class GameActivity extends Activity {
                 }
                 i++;
             }
-            /*
-            if(enemigo.getVisibility()==View.VISIBLE){
-                float centreX=enemigo.getX() + enemigo.getWidth()  / 2;
-                float centreY=enemigo.getY() + enemigo.getHeight() /2;
-                int x= ((int) centreX);
-                int y= ((int) centreY);
-                if ((Math.abs(x - misilVerde.getX()) < enemigo.getWidth()  / 2)&&(Math.abs(y - misilVerde.getY()) < enemigo.getHeight()/2)) {
-                    enemigo.setVisibility(View.INVISIBLE);
-                    enemigo.setY(300);
-                    score+=100;
-                    scored=Integer.toString(score);
-                    tx.setText("PTS: "+scored);
-                }
-            }*/
         }
     };
 
@@ -251,7 +231,7 @@ public class GameActivity extends Activity {
                     str_lives = Integer.toString(lives);
                     txt_lives.setText("Lives: " + str_lives);
                     if(lives == 0){
-                       end();
+                        end();
                     }
                     misilRojo.setVisibility(View.INVISIBLE);
 
@@ -292,7 +272,7 @@ public class GameActivity extends Activity {
     private void crearEnemigos(){
         SharedPreferences prefs = this.getSharedPreferences("SpaceInvaders", Context.MODE_PRIVATE);
         int nextHeight= enemiesInitialHeight;
-        int nextWidth=10;
+        int nextWidth=100;
         int opcion=0;
         RelativeLayout rl = (RelativeLayout) findViewById(R.id.activity_game);
 
@@ -312,19 +292,17 @@ public class GameActivity extends Activity {
                 enemigos[i].setImageResource(R.drawable.caza);
             }
             rl.addView(enemigos[i]);
-            enemigos[i].getLayoutParams().height=50;
-            enemigos[i].getLayoutParams().width=150;
+            enemigos[i].getLayoutParams().height=100*width/densidad;
+            enemigos[i].getLayoutParams().width=100*height/densidad;
 
             if (i%5==4){
-                nextHeight+=60;
-                nextWidth = 10;
+                nextHeight+=200;
+                nextWidth = 100;
             }else{
-                nextWidth +=100;
+                nextWidth +=180;
             }
         }
     }
-
-
 
     @Override
     public void onBackPressed(){
