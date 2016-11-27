@@ -33,7 +33,7 @@ public class GameActivity extends Activity {
     private int score;
     private int width;
     private int height;
-    private int lives=3;
+    private int lives=300;
 
     private Handler han_MovimientoCaza = new Handler();
     private Handler han_MisilVerde = new Handler();
@@ -44,6 +44,7 @@ public class GameActivity extends Activity {
     private ImageButton jugador;
     private ImageView misilRojo;
     private ImageView misilVerde;
+    private ImageView explosion;
     private RelativeLayout layout;
     private LinearLayout layoutenemigos;
     private int densidad;
@@ -133,16 +134,16 @@ public class GameActivity extends Activity {
             }*/
 
             //Sube para arriba
-            if(enemigos[0].getY()>=height/2+100){
-                for(int i=0;i<20;i++){
+            if(enemigos[0].getY()>=height/2+100) {
+                for (int i = 0; i < 20; i++) {
                     enemigos[i].setY(enemiesInitialHeight);
-                    if (i%5==4){
-                        enemiesInitialHeight +=60;
+                    if (i % 5 == 4) {
+                        enemiesInitialHeight += 60;
                     }
                 }
                 enemiesInitialHeight = 300;
-
-            han_MovimientoCaza.postDelayed(this, 10);
+            }
+                han_MovimientoCaza.postDelayed(this, 10);
 
         }
     };
@@ -292,11 +293,11 @@ public class GameActivity extends Activity {
                 enemigos[i].setImageResource(R.drawable.caza);
             }
             rl.addView(enemigos[i]);
-            enemigos[i].getLayoutParams().height=100*width/densidad;
-            enemigos[i].getLayoutParams().width=100*height/densidad;
+            enemigos[i].getLayoutParams().height=50*width/densidad;
+            enemigos[i].getLayoutParams().width=50*height/densidad;
 
             if (i%5==4){
-                nextHeight+=200;
+                nextHeight+=100;
                 nextWidth = 100;
             }else{
                 nextWidth +=180;
@@ -335,8 +336,8 @@ public class GameActivity extends Activity {
             enemigos[i].setX(nextWidth);
             enemigos[i].setY(nextHeight);
             if (i%5==4){
-                nextHeight+=60;
-                nextWidth = 10;
+                nextHeight+=100;
+                nextWidth = 100;
             }else{
                 nextWidth +=100;
             }
