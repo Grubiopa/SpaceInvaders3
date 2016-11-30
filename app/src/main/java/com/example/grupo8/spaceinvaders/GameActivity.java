@@ -273,7 +273,7 @@ public class GameActivity extends Activity {
             Drawable cambio = getResources().getDrawable(R.drawable.caza);
             Drawable escudo = escudo1.getBackground();
             if(escudo1.getResources().equals(sDraw)){
-                escudo1.setBackground(cambio);
+                escudo1.setImageResource(R.drawable.caza);
            }
         }
     }
