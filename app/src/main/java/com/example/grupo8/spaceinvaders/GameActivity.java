@@ -54,6 +54,9 @@ public class GameActivity extends Activity {
     private int enemiesInitialHeight =300;
     private boolean enemigomuerto = false;
 
+    private ImageView escudo1;
+    private ImageView escudo2;
+    private ImageView escudo3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,9 @@ public class GameActivity extends Activity {
         jugador = (ImageButton) findViewById(R.id.naveJugador);
         misilRojo = (ImageView) findViewById(R.id.misilRojo);
         misilVerde = (ImageView) findViewById(R.id.misilVerde);
-        //explosion = (ImageView) findViewById(R.id.explosion);
+        escudo1 = (ImageView) findViewById(R.id.escudo1);
+        escudo2 = (ImageView) findViewById(R.id.escudo2);
+        escudo3 = (ImageView) findViewById(R.id.escudo3);
         layout = (RelativeLayout) findViewById(R.id.activity_game);
 
         if(0==prefs.getInt("music", 0)){
@@ -205,6 +210,7 @@ public class GameActivity extends Activity {
                 }
                 i++;
             }
+            destruccionEscudos(misilRojo.getX(),misilRojo.getY());
         }
     };
 
@@ -247,9 +253,30 @@ public class GameActivity extends Activity {
 
                 }
             }
+            destruccionEscudos(misilRojo.getX(),misilRojo.getY());
             han_MisilRojo.postDelayed(this, 30);
         }
     };
+
+
+    private void destruccionEscudos(float misilX, float misilY){
+        float centreX1=escudo1.getX() + escudo1.getWidth()  / 2;
+        float centreY1=escudo1.getY() + escudo1.getHeight() /2;
+        float centreX2=escudo2.getX() + escudo2.getWidth()  / 2;
+        float centreY2=escudo2.getY() + escudo2.getHeight() /2;
+        float centreX3=escudo3.getX() + escudo3.getWidth()  / 2;
+        float centreY3=escudo3.getY() + escudo3.getHeight() /2;
+
+        if ((Math.abs(centreX1 - misilX) < escudo1.getWidth()  / 2)&&(Math.abs(centreY1 - misilY)
+                < escudo1.getHeight()/2)) {
+            Drawable sDraw = getResources().getDrawable(R.drawable.escudo1);
+            Drawable cambio = getResources().getDrawable(R.drawable.caza);
+            Drawable escudo = escudo1.getBackground();
+            if(escudo1.getResources().equals(sDraw)){
+                escudo1.setBackground(cambio);
+           }
+        }
+    }
 
     public void disparo(View v){
         misilVerde.setX(jugador.getX()+ jugador.getWidth()/2);

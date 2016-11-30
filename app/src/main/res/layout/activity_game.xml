@@ -62,6 +62,37 @@
         android:layout_marginRight="49dp"
         android:layout_marginEnd="49dp" />
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/escudo1"
+        android:layout_marginLeft="23dp"
+        android:layout_marginStart="23dp"
+        android:id="@+id/escudo1"
+        android:layout_above="@+id/naveJugador"
+        android:layout_toRightOf="@+id/score"
+        android:layout_toEndOf="@+id/score" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/escudo1"
+        android:id="@+id/escudo2"
+        android:layout_above="@+id/naveJugador"
+        android:layout_alignLeft="@+id/naveJugador"
+        android:layout_alignStart="@+id/naveJugador" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/escudo1"
+        android:id="@+id/escudo3"
+        android:layout_alignTop="@+id/escudo2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="31dp"
+        android:layout_marginEnd="31dp" />
+
     <!--<ImageView
         android:layout_width="35dp"
         android:layout_height="35dp"
