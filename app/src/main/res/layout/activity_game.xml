@@ -65,33 +65,33 @@
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/escudo1"
-        android:layout_marginLeft="23dp"
-        android:layout_marginStart="23dp"
-        android:id="@+id/escudo1"
-        android:layout_above="@+id/naveJugador"
-        android:layout_toRightOf="@+id/score"
-        android:layout_toEndOf="@+id/score" />
-
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="@drawable/escudo1"
+        android:src="@drawable/escudo1"
         android:id="@+id/escudo2"
         android:layout_above="@+id/naveJugador"
         android:layout_alignLeft="@+id/naveJugador"
-        android:layout_alignStart="@+id/naveJugador" />
+        android:layout_alignStart="@+id/naveJugador"
+        android:layout_marginBottom="40dp"/>
 
     <ImageView
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:background="@drawable/escudo1"
+        android:src="@drawable/escudo1"
         android:id="@+id/escudo3"
-        android:layout_alignTop="@+id/escudo2"
+        android:layout_alignParentBottom = "true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="31dp"
-        android:layout_marginEnd="31dp" />
+        android:layout_marginBottom="100dp" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/escudo1"
+        android:layout_marginLeft="34dp"
+        android:layout_marginStart="34dp"
+        android:id="@+id/escudo1"
+        android:layout_alignParentBottom = "true"
+        android:layout_marginBottom="100dp"/>
 
     <!--<ImageView
         android:layout_width="35dp"

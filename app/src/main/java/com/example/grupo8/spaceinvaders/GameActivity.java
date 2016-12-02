@@ -8,11 +8,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,6 +60,10 @@ public class GameActivity extends Activity {
     private ImageView escudo1;
     private ImageView escudo2;
     private ImageView escudo3;
+
+    int counter1=0;
+    int counter2=0;
+    int counter3=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -269,12 +276,75 @@ public class GameActivity extends Activity {
 
         if ((Math.abs(centreX1 - misilX) < escudo1.getWidth()  / 2)&&(Math.abs(centreY1 - misilY)
                 < escudo1.getHeight()/2)) {
-            Drawable sDraw = getResources().getDrawable(R.drawable.escudo1);
-            Drawable cambio = getResources().getDrawable(R.drawable.caza);
-            Drawable escudo = escudo1.getBackground();
-            if(escudo1.getResources().equals(sDraw)){
-                escudo1.setImageResource(R.drawable.caza);
-           }
+            if(counter1==0){
+                escudo1.setImageResource(R.drawable.escudo2);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter1++;
+            }else if(counter1==1){
+                escudo1.setImageResource(R.drawable.escudo3);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter1++;
+            }else {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) escudo1.getLayoutParams();
+                params.width = 0;
+                params.height=0;
+                escudo1.setY(0);
+                escudo1.setX(0);
+                escudo1.setLayoutParams(params);
+                escudo1.setVisibility(View.GONE);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+            }
+        }
+        if ((Math.abs(centreX2 - misilX) < escudo2.getWidth()  / 2)&&(Math.abs(centreY2 - misilY)
+                < escudo2.getHeight()/2)) {
+            if(counter2==0){
+                escudo2.setImageResource(R.drawable.escudo2);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter2++;
+            }else if(counter2==1){
+                escudo2.setImageResource(R.drawable.escudo3);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter2++;
+            }else {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) escudo2.getLayoutParams();
+                params.width = 0;
+                params.height=0;
+                escudo2.setY(0);
+                escudo2.setX(0);
+                escudo2.setLayoutParams(params);
+                escudo2.setVisibility(View.GONE);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+            }
+        }
+        if ((Math.abs(centreX3 - misilX) < escudo3.getWidth()  / 2)&&(Math.abs(centreY3 - misilY)
+                < escudo3.getHeight()/2)) {
+            if(counter3==0){
+                escudo3.setImageResource(R.drawable.escudo2);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter3++;
+            }else if(counter3==1){
+                escudo3.setImageResource(R.drawable.escudo3);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+                counter3++;
+            }else {
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) escudo3.getLayoutParams();
+                params.width = 0;
+                params.height=0;
+                escudo3.setY(0);
+                escudo3.setX(0);
+                escudo3.setLayoutParams(params);
+                escudo3.setVisibility(View.GONE);
+                misilRojo.setX(0);
+                misilRojo.setY(0);
+            }
         }
     }
 
