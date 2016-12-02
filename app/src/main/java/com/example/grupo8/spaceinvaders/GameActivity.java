@@ -323,7 +323,7 @@ public class GameActivity extends Activity {
 
     public void disparo(View v){
         misilVerde.setX(jugador.getX()+ jugador.getWidth()/2);
-        misilVerde.setY(jugador.getY()-200);
+        misilVerde.setY(jugador.getY()+jugador.getHeight()/2 -50);
         misilVerde.setVisibility(View.VISIBLE);
         jugador.setEnabled(false);
         han_MisilVerde.postDelayed(run_MisilVerde, 40);
